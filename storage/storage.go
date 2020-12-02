@@ -26,9 +26,7 @@ func NewPostgresDB() {
 		if err = db.Ping(); err != nil {
 			log.Fatalf("can't do ping : %v", err)
 		}
-
 		fmt.Println("Conectado a postgres")
-
 	})
 }
 //Pool return a unique instace of db
