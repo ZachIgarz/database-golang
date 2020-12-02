@@ -5,7 +5,7 @@ import (
 	"github.com/ansel1/merry"
 )
 
-const psqlCreateProduct = `CREATE TABLE IF NOT EXISTS products(
+const psqlMigrateProduct = `CREATE TABLE IF NOT EXISTS products(
 id SERIAL NOT NULL, 
 name VARCHAR(25) NOT NULL,
 observations VARCHAR(100),
@@ -27,14 +27,13 @@ func NewPsqlProduct(db *sql.DB) *PsqlProduct {
 
 //Migrate implement the interface product.Storage
 func (p *PsqlProduct) Migrate() error {
-	stmt, err := p.db.Prepare(psqlCreateProduct)
-	defer stmt.Close()
+	stmt, err := p.db.Prepare(psqlMigrateProduct)
 
 	if err != nil {
 
 		return merry.New("error statement" + err.Error())
 	}
-
+	defer stmt.Close()
 
 	_, err = stmt.Exec()
 	if err != nil {
