@@ -17,15 +17,17 @@ func NewPostgresDB() {
 	//This function will be executed only once, even if it is called several times
 	once.Do(func() {
 		var connectionURL = "postgres://postgres:Abcd-456@localhost/go-db?sslmode=disable"
-		db, err := sql.Open("postgres", connectionURL)
+		var err error
+
+		db, err = sql.Open("postgres", connectionURL)
 		if err != nil {
 		log.Fatalf("can't open db : %v", err)
 		}
-		defer db.Close()
 
 		if err = db.Ping(); err != nil {
 			log.Fatalf("can't do ping : %v", err)
 		}
+
 		fmt.Println("Conectado a postgres")
 	})
 }

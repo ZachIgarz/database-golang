@@ -35,7 +35,7 @@ func NewService(s Storage) *Service{
 }
 
 //Migrate is use for migrate product
-func (s *Service) Migrate()  error{
+func (service *Service) Migrate()  error{
 
-	return s.storage.Migrate()
+	return service.storage.Migrate()
 }
