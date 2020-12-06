@@ -4,7 +4,6 @@ import (
 	"DataBases-Go/pkg/product"
 	"DataBases-Go/storage"
 	"fmt"
-	"log"
 )
 
 func main() {
@@ -14,9 +13,17 @@ func main() {
 	storageProduct := storage.NewPsqlProduct(storage.Pool())
 	serviceProduct := product.NewService(storageProduct)
 
-	if err := serviceProduct.Migrate(); err != nil {
-		log.Fatalf("Product.Migrate : %v", err)
+	model := &product.Model{
+		Name: "Curse of go",
+		Price: 50,
 	}
-	fmt.Println("Se realizo la migracion")
+	err := serviceProduct.Create(model)
+	if err != nil {
+
+		fmt.Println("Error " + err.Error())
+	}
+
+	fmt.Printf("%+v\n", model)
+
 
 }
